@@ -50,8 +50,13 @@
       <!-- Already have an account -->
       <p class="text-center text-sm text-gray-600 mt-2">
         Already have an account?
-        <a href="#" class="text-blue-600 font-medium hover:underline">Login</a>
-      </p>
+        <a
+  routerLink="/signin"
+  class="text-blue-600 font-medium hover:underline cursor-pointer" (click)="signin()"
+>
+  Login
+</a>
+</p>
 
     </form>
   </div>
