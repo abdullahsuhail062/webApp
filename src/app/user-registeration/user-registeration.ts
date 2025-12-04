@@ -20,7 +20,7 @@ export class UserRegisteration {
 constructor(private router: Router, private apiService: Apis){}
 
  registerForm = new FormGroup({
-    fullName: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }),
     confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
