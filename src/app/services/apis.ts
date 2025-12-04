@@ -19,5 +19,9 @@ private apiUrl = environment.apiUrl
   registerUser(body: RegisterRequest): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/registerUser`,{body})
   }
+
+  loginUser(body: {email: string, password: string}): Observable<any> {
+    return this.http.post(`${this.apiUrl}/users/loginUser`, {body})
+  }
   
 }
