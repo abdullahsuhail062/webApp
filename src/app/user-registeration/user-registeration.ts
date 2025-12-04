@@ -4,6 +4,8 @@ import { validate } from '@angular/forms/signals';
 import { Route, Router, RouterLink } from '@angular/router';
 import { Apis } from '../services/apis';
 import { RegisterRequest } from '../models/register-request.model';
+import { authStore } from '../auth-store';
+
 
 
 
@@ -31,8 +33,9 @@ constructor(private router: Router, private apiService: Apis){
   onSubmit() {
     const body = this.registerForm.value as RegisterRequest
     if (this.registerForm.valid) {
-      console.log('Form Data:', this.registerForm.value);
-      this.apiService.registerUser(body).subscribe({next: (response) => {console.log(response)}})
+      this.apiService.registerUser(body).subscribe({next: (response) => {authStore.setAuth(response.user, response.token);
+        this.router.navigate(['/dashboard'])
+      }})
 
     } else {
       this.registerForm.markAllAsTouched();
