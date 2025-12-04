@@ -23,15 +23,25 @@ export const authStore = {
     }
   },
 
-  loadFromStorage() {
-    if (!isBrowser) return;
+ loadFromStorage() {
+  if (!isBrowser) return;
 
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+  const token = localStorage.getItem('token');
+  const userStr = localStorage.getItem('user');
 
-    if (token) tokenSignal.set(token);
-    if (user) userSignal.set(JSON.parse(user));
-  },
+  if (token) authStore.token.set(token);
+
+  if (userStr) {
+    try {
+      const user = JSON.parse(userStr);
+      authStore.user.set(user);
+    } catch (e) {
+      console.warn("Invalid JSON in localStorage 'user', clearing it.");
+      localStorage.removeItem('user');
+      authStore.user.set(null);
+    }
+  }
+},
 
   logout() {
     userSignal.set(null);
