@@ -8,6 +8,6 @@ import { authStore } from './auth-store';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideClientHydration(withEventReplay()), authStore.loadFromStorage() as any
+    provideRouter(routes), provideClientHydration(withEventReplay())
   ]
 };
