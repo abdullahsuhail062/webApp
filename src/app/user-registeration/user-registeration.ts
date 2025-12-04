@@ -15,16 +15,18 @@ import { RegisterRequest } from '../models/register-request.model';
   styleUrl: './user-registeration.css',
 })
 export class UserRegisteration {
-  formGroup: any
+  registerForm: FormGroup
 
-constructor(private router: Router, private apiService: Apis){}
-
- registerForm = new FormGroup({
+constructor(private router: Router, private apiService: Apis){
+  this.registerForm = new FormGroup({
     username: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
     password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(6)] }),
     confirmPassword: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
   });
+}
+
+ 
 
   onSubmit() {
     const body = this.registerForm.value as RegisterRequest
