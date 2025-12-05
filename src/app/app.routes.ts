@@ -14,7 +14,7 @@ export const routes: Routes = [ {
   },
   {
     path: '',
-    component:UserRegisteration
+    component:UserRegisteration,canMatch: [redirectIfLoggedInGuard]
   },
   {
     path: 'dashboard',
