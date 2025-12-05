@@ -9,21 +9,20 @@ import { authStore } from './auth-store';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
+export class App  {
   protected readonly title = signal('webapp');
   constructor(private router: Router) {
- 
-  }
-
-  ngOnInit(){
-effect(() => {
+    effect(() => {
       if (authStore.isLoggedIn()) {
         this.router.navigate(['/dashboard']);
         console.log('loaded successfully');
         
       }
     });
+ 
   }
+
+ 
 }
 
 
