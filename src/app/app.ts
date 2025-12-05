@@ -1,6 +1,5 @@
 import { Component, effect, OnInit, signal } from '@angular/core';
 import {  Router, RouterOutlet } from '@angular/router';
-import { authStore } from './auth-store';
 
 
 @Component({
@@ -13,13 +12,7 @@ import { authStore } from './auth-store';
 export class App  {
   protected readonly title = signal('webapp');
   constructor(private router: Router) {
-    effect(() => {
-      if (authStore.isLoggedIn()) {
-        this.router.navigate(['/dashboard']);
-        console.log('loaded successfully');
-        
-      }
-    });
+ 
  
   }
 
