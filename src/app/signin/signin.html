@@ -19,11 +19,12 @@
           placeholder="Enter your email"
         />
 
-        <!-- Error -->
-        <p *ngIf="loginForm.controls.email.touched && loginForm.controls.email.invalid"
-           class="text-red-500 text-sm mt-1">
-          A valid email is required.
-        </p>
+        <!-- Error (New Angular Control Flow) -->
+        @if (loginForm.controls['email'].touched && loginForm.controls['email'].invalid) {
+          <p class="text-red-500 text-sm mt-1">
+            A valid email is required.
+          </p>
+        }
       </div>
 
       <!-- Password -->
@@ -36,11 +37,12 @@
           placeholder="Enter your password"
         />
 
-        <!-- Error -->
-        <p *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"
-           class="text-red-500 text-sm mt-1">
-          Password is required.
-        </p>
+        <!-- Error (New Angular Control Flow) -->
+        @if (loginForm.controls['password'].touched && loginForm.controls['password'].invalid) {
+          <p class="text-red-500 text-sm mt-1">
+            Password is required.
+          </p>
+        }
       </div>
 
       <!-- Forgot password -->
