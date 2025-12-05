@@ -1,4 +1,4 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import {  Router, RouterOutlet } from '@angular/router';
 import { authStore } from './auth-store';
 
@@ -9,13 +9,13 @@ import { authStore } from './auth-store';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App {
+export class App implements OnInit {
   protected readonly title = signal('webapp');
   constructor(private router: Router) {
  
   }
 
-  OnInit(){
+  ngOnInit(){
 effect(() => {
       if (authStore.isLoggedIn()) {
         this.router.navigate(['/dashboard']);
