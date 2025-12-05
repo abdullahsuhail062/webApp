@@ -4,10 +4,19 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { authStore } from './auth-store';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './authInterceptor';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideRouter(routes), provideClientHydration(withEventReplay())
+    provideRouter(routes), provideClientHydration(withEventReplay()), {
+    provide: 'APP_INIT',
+    useFactory: () => authStore.loadFromStorage(),
+  },provideHttpClient(
+  withInterceptors([authInterceptor]), withFetch()
+)
+
   ]
 };

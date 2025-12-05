@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, effect, signal } from '@angular/core';
+import {  Router, RouterOutlet } from '@angular/router';
+import { authStore } from './auth-store';
+
 
 @Component({
   selector: 'app-root',
@@ -9,4 +11,13 @@ import { RouterOutlet } from '@angular/router';
 })
 export class App {
   protected readonly title = signal('webapp');
+  constructor(private router: Router) {
+ effect(() => {
+      if (authStore.isLoggedIn()) {
+        this.router.navigate(['/dashboard']);
+      }
+    });
+  }
 }
+
+
