@@ -3,6 +3,6 @@ import { appConfig } from './app/app.config';
 import { App } from './app/app';
 import { authStore } from './app/auth-store';
 
-authStore.loadFromStorage()
+//authStore.loadFromStorage()
 bootstrapApplication(App, appConfig)
   .catch((err) => console.error(err));
