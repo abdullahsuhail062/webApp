@@ -14,8 +14,7 @@ export const routes: Routes = [ {
   },
   {
     path: '',
-    loadComponent: () => import('./user-registeration/user-registeration').then(m => m.UserRegisteration),
-    canMatch: [redirectIfLoggedInGuard]
+    component:UserRegisteration
   },
   {
     path: 'dashboard',
