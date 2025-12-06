@@ -28,7 +28,6 @@ export const authStore = {
 
   const token = localStorage.getItem('token');
   const userStr = localStorage.getItem('user');
-  console.log(token);
   
 
   if (token) authStore.token.set(token);
