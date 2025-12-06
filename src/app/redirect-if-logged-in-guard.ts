@@ -5,7 +5,7 @@ import { authStore } from './auth-store';
 export const redirectIfLoggedInGuard = () => {
   const router = inject(Router);
   const isLoggedIn = authStore.isLoggedIn()
-  console.log('fn being called');
+  console.log('redirectIfLoggedIn fn being called');
   
 
   if (isLoggedIn) {
