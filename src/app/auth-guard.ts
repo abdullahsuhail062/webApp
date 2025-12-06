@@ -6,6 +6,8 @@ export const authGuard = () => {
   const router = inject(Router);
 
   if (!authStore.isLoggedIn()) {
+    console.log('fn being called');
+    
     return router.parseUrl('/signin');
   }
 
