@@ -5,8 +5,9 @@ import { authStore } from './auth-store';
 
 export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
+  const authGuard = !!authStore.isLoggedIn()
 
-  if (!authStore.isLoggedIn()) {
+  if (!authGuard) {
     console.log('fn being called');
     
     return router.parseUrl('/signin');
