@@ -8,15 +8,14 @@ import { authGuard } from './auth-guard';
 
 
 export const routes: Routes = [ {
-    path: 'signin',canActivate: [redirectIfLoggedInGuard],
-    loadComponent: () => import('./signin/signin').then(m => m.Signin),
+    path: 'signin',component: Signin,canActivate: [redirectIfLoggedInGuard],
+    
     
   },
   {
-    path: '', canActivate: [redirectIfLoggedInGuard],
-    loadComponent: () => import('./user-registeration/user-registeration').then(m => m.UserRegisteration), 
+    path: '', component: UserRegisteration, canActivate: [redirectIfLoggedInGuard],
+ 
   },
   {
-    path: 'dashboard', canActivate: [authGuard],
-    loadComponent: () => import('./dashboard/dashboard').then(m => m.Dashboard)
+    path: 'dashboard', component: Dashboard, canActivate: [authGuard]
   }];
