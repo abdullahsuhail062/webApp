@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router } from '@angular/router';
+import { CanActivate, CanMatchFn, Router } from '@angular/router';
 import { authStore } from './auth-store';
 
-export const redirectIfLoggedInGuard: CanMatchFn = () => {
+export const redirectIfLoggedInGuard = () => {
   const router = inject(Router);
   const isLoggedIn = authStore.isLoggedIn()
 
