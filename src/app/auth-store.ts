@@ -1,25 +1,16 @@
-import { signal, computed, WritableSignal, Signal } from '@angular/core';
+import { signal, computed } from '@angular/core';
 import { isBrowser } from './browser.util';
 
-export interface AuthStore {
-  user: WritableSignal<any | null>;
-  token: WritableSignal<string | null>;
-  ready: Signal<boolean>;
-  isLoggedIn: Signal<boolean>;
-  setAuth: (user: any, token: string) => void;
-  loadFromStorage: () => void;
-  logout: () => void;
-}
-
-// Create signals first
 const userSignal = signal<any | null>(null);
 const tokenSignal = signal<string | null>(null);
-const readySignal = signal<boolean>(false);  // <-- NEW
 
-export const authStore: AuthStore = {
+// NEW: loading indicator (prevents signin page flash)
+const initializedSignal = signal(false);
+
+export const authStore = {
   user: userSignal,
   token: tokenSignal,
-  ready: readySignal,  // <-- NEW
+  initialized: initializedSignal,
 
   isLoggedIn: computed(() => !!tokenSignal()),
 
@@ -34,30 +25,24 @@ export const authStore: AuthStore = {
   },
 
   loadFromStorage() {
-    if (!isBrowser) {
-      readySignal.set(true); // <-- SSR fallback
-      return;
-    }
+    if (!isBrowser) return;
 
-    try {
-      const token = localStorage.getItem('token');
-      const userStr = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    const userStr = localStorage.getItem('user');
 
-      if (token) tokenSignal.set(token);
+    if (token) tokenSignal.set(token);
 
-      if (userStr) {
-        try {
-          userSignal.set(JSON.parse(userStr));
-        } catch (e) {
-          console.warn("Invalid JSON in localStorage 'user'. Resetting.");
-          localStorage.removeItem('user');
-          userSignal.set(null);
-        }
+    if (userStr) {
+      try {
+        userSignal.set(JSON.parse(userStr));
+      } catch {
+        localStorage.removeItem('user');
+        userSignal.set(null);
       }
-    } finally {
-      // Mark as ready no matter what
-      readySignal.set(true);
     }
+
+    // Mark initialization complete
+    initializedSignal.set(true);
   },
 
   logout() {
