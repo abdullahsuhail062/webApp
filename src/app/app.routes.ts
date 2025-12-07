@@ -4,10 +4,13 @@ import { Signin } from './signin/signin';
 import { Dashboard } from './dashboard/dashboard';
 import { redirectIfLoggedInGuard } from './redirect-if-logged-in-guard';
 import { authGuard } from './auth-guard';
+import { App } from './app';
 
 
 
-export const routes: Routes = [ {
+export const routes: Routes = [ 
+  {path: '', component: App},{
+
     path: 'user-registeration', component: UserRegisteration, canActivate: [redirectIfLoggedInGuard],
  
   }, {
