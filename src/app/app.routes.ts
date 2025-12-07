@@ -9,11 +9,15 @@ import { App } from './app';
 
 
 export const routes: Routes = [ 
-  {path: '', component: App},{
+  {
 
     path: 'user-registeration', component: UserRegisteration, canActivate: [redirectIfLoggedInGuard],
  
-  }, {
+  },  {
+    path: '',
+    redirectTo: 'user-registeration',
+    pathMatch: 'full'
+  },{
     path: 'dashboard', component: Dashboard, canActivate: [authGuard]
   }, {
     path: 'signin',component: Signin,canActivate: [redirectIfLoggedInGuard],
