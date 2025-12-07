@@ -1,68 +1,12 @@
-// import { signal, computed } from '@angular/core';
-// import { isBrowser } from './browser.util';
-
-// const userSignal = signal<any | null>(null);
-// const tokenSignal = signal<string | null>(null);
-
-// // NEW: loading indicator (prevents signin page flash)
-// const initializedSignal = signal(false);
-
-// export const authStore = {
-//   user: userSignal,
-//   token: tokenSignal,
-//   initialized: initializedSignal,
-
-//   isLoggedIn: computed(() => !!tokenSignal()),
-
-//   setAuth(user: any, token: string) {
-//     userSignal.set(user);
-//     tokenSignal.set(token);
-
-//     if (isBrowser) {
-//       localStorage.setItem('token', token);
-//       localStorage.setItem('user', JSON.stringify(user));
-//     }
-//   },
-
-//   loadFromStorage() {
-//     if (!isBrowser) return;
-
-//     const token = localStorage.getItem('token');
-//     const userStr = localStorage.getItem('user');
-
-//     if (token) tokenSignal.set(token);
-
-//     if (userStr) {
-//       try {
-//         userSignal.set(JSON.parse(userStr));
-//       } catch {
-//         localStorage.removeItem('user');
-//         userSignal.set(null);
-//       }
-//     }
-
-//     // Mark initialization complete
-//     initializedSignal.set(true);
-//   },
-
-//   logout() {
-//     userSignal.set(null);
-//     tokenSignal.set(null);
-
-//     if (isBrowser) {
-//       localStorage.removeItem('token');
-//       localStorage.removeItem('user');
-//     }
-//   }
-// };
 import { signal, computed } from '@angular/core';
 import { isBrowser } from './browser.util';
 
 const userSignal = signal<any | null>(null);
 const tokenSignal = signal<string | null>(null);
-
-// NEW signal to indicate storage restore is done
 const authLoadedSignal = signal(false);
+
+// Expiration time in milliseconds (1 hour)
+const TOKEN_EXPIRATION = 60 * 60 * 1000;
 
 export const authStore = {
   user: userSignal,
@@ -72,12 +16,15 @@ export const authStore = {
   isLoggedIn: computed(() => !!tokenSignal()),
 
   setAuth(user: any, token: string) {
+    const now = Date.now();
+
     userSignal.set(user);
     tokenSignal.set(token);
 
     if (isBrowser) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('tokenTimestamp', now.toString()); // store timestamp
     }
   },
 
@@ -86,10 +33,26 @@ export const authStore = {
 
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
+    const tokenTimestampStr = localStorage.getItem('tokenTimestamp');
 
-    if (token) tokenSignal.set(token);
+    let tokenValid = false;
 
-    if (userStr) {
+    if (token && tokenTimestampStr) {
+      const tokenTimestamp = parseInt(tokenTimestampStr, 10);
+      const now = Date.now();
+
+      if (now - tokenTimestamp < TOKEN_EXPIRATION) {
+        tokenSignal.set(token);
+        tokenValid = true;
+      } else {
+        // Token expired
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('tokenTimestamp');
+      }
+    }
+
+    if (tokenValid && userStr) {
       try {
         userSignal.set(JSON.parse(userStr));
       } catch {
@@ -98,7 +61,6 @@ export const authStore = {
       }
     }
 
-    // Mark as loaded
     authLoadedSignal.set(true);
   },
 
@@ -107,5 +69,6 @@ export const authStore = {
     tokenSignal.set(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('tokenTimestamp');
   }
 };
