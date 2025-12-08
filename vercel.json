@@ -1,5 +1,16 @@
 {
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+  "version": 2,
+  "builds": [
+    {
+      "src": "dist/your-app/server/server.mjs",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "dist/your-app/browser/**/*",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "dist/webapp/server/server.mjs" }
   ]
 }
