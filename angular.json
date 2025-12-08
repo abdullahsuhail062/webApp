@@ -2,8 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm",
-    "analytics": "e7a28849-0dde-4820-8fe4-2a5ef1ea66d8"
+    "packageManager": "npm"
   },
   "projects": {
     "webapp": {
@@ -15,61 +14,82 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
+            "outputPath": "dist/webapp/browser",
             "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
-            "outputMode": "static",
-            "outputPath": "dist/webapp/browser"
+            "scripts": []
           },
           "configurations": {
             "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "4kb",
-                  "maximumError": "8kb"
-                }
-              ],
-              "outputHashing": "all"
+                { "type": "initial", "maximumWarning": "2mb", "maximumError": "5mb" }
+              ]
             },
             "development": {
               "optimization": false,
-              "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "extractCss": false,
+              "namedChunks": true,
+              "aot": false,
+              "vendorChunk": true,
+              "buildOptimizer": false
             }
-          },
-          "defaultConfiguration": "production"
+          }
         },
-
+        "server": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/webapp/server",
+            "main": "src/main.server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "outputMode": "server"
+          },
+          "configurations": {
+            "production": {
+              "optimization": true
+            },
+            "development": {
+              "optimization": false
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@angular/ssr:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "webapp:build:production",
+              "serverTarget": "webapp:server:production"
+            },
+            "development": {
+              "buildTarget": "webapp:build:development",
+              "serverTarget": "webapp:server:development"
+            }
+          }
+        },
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
-            "production": {
-              "buildTarget": "webapp:build:production"
-            },
-            "development": {
-              "buildTarget": "webapp:build:development"
-            }
+            "production": { "buildTarget": "webapp:build:production" },
+            "development": { "buildTarget": "webapp:build:development" }
           },
           "defaultConfiguration": "development"
         },
-
-        "test": {
-          "builder": "@angular/build:unit-test"
-        }
+        "test": { "builder": "@angular/build:unit-test" }
       }
     }
-  }
+  },
+  "defaultProject": "webapp"
 }
