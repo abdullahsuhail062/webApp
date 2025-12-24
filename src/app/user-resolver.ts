@@ -1,20 +1,27 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, MaybeAsync, RedirectCommand, Resolve, RouterStateSnapshot } from '@angular/router';
-import { User } from './models/user';
-import { HttpClient } from '@angular/common/http';
-
-@Injectable({
-  providedIn: 'root',
-})
-export class UserResolver  implements Resolve<User>{
-  
-constructor(private http: HttpClient) {}
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): MaybeAsync<User | RedirectCommand> {
-     
-    return this.http.get<User>('')
+import { ResolveFn, Router } from '@angular/router';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { map, of } from 'rxjs';
+import { AuthService } from './auth-service';
 
 
+export const userResolver: ResolveFn<boolean> = () => {
+  const auth = inject(AuthService);
+  const router = inject(Router);
+  const platformId = inject(PLATFORM_ID);
+
+  // SSR: allow rendering
+  if (!isPlatformBrowser(platformId)) {
+    return of(true);
   }
-  
-}
+
+  return auth.loadUser().pipe(
+    map(user => {
+      if (user) {
+        return true;
+      }
+      router.navigateByUrl('/signin');
+      return false;
+    })
+  );
+};

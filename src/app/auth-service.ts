@@ -1,8 +1,10 @@
-import { Injectable, inject, PLATFORM_ID, signal } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { tap, catchError, of } from 'rxjs';
-import { User } from './models/user';
+import { inject, Injectable, PLATFORM_ID, signal } from "@angular/core";
+import { User } from "./models/user";
+import { HttpClient } from "@angular/common/http";
+import { isPlatformBrowser } from "@angular/common";
+import { catchError, of, tap } from "rxjs";
+
+
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -29,7 +31,11 @@ export class AuthService {
       return of(null);
     }
 
-    // ✅ Browser only
+    // Avoid duplicate calls
+    if (this.userSignal()) {
+      return of(this.userSignal());
+    }
+
     return this.http
       .get<User>('/api/me', { withCredentials: true })
       .pipe(
