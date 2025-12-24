@@ -5,12 +5,23 @@ import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { authStore } from './auth-store';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
-APP_INITIALIZER
 import { authInterceptor } from './authInterceptor';
+import { AuthService } from './auth-service';
+import { firstValueFrom } from 'rxjs';
 
 
+export function initAuth(auth: AuthService) {
+  return () => firstValueFrom(auth.loadUser());
+}
 export const appConfig: ApplicationConfig = {
-  providers: [
+  providers: [ 
+     {
+      provide: APP_INITIALIZER,
+      useFactory: initAuth,
+      deps: [AuthService],
+      multi: true
+    }
+,
     
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay()), 

@@ -1,30 +1,16 @@
 {
-  "name": "webapp",
+  "name": "web-frontend-app",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-     "serve:ssr": "node dist/webapp/server/server.mjs",
-    "build:ssr": "ng build --configuration production && ng run webapp:server",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve:ssr:webapp": "node dist/webapp/server/server.mjs"
+    "start": "ng serve web-frontend-app",
+    "build": "ng build web-frontend-app",
+    "build:ssr": "ng build web-frontend-app --configuration production && ng run web-frontend-app:server",
+    "serve:ssr": "node dist/web-frontend-app/server/server.mjs",
+    "watch": "ng build web-frontend-app --watch --configuration development",
+    "test": "ng test web-frontend-app"
   },
-  "prettier": {
-    "printWidth": 100,
-    "singleQuote": true,
-    "overrides": [
-      {
-        "files": "*.html",
-        "options": {
-          "parser": "angular"
-        }
-      }
-    ]
-  },
-  "private": true,
-  "packageManager": "npm@11.6.4",
   "dependencies": {
     "@angular/common": "^21.0.0",
     "@angular/compiler": "^21.0.0",
