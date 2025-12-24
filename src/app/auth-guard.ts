@@ -1,10 +1,19 @@
-import { inject, computed } from '@angular/core';
+import { inject, computed, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { authStore } from './auth-store';
+import { isPlatformBrowser } from '@angular/common';
+import { AuthService } from './auth-service';
 
+const auth = authStore;
+const router = inject(Router)
 
 export const authGuard: CanActivateFn = () => {
-  const router = inject(Router);
+   if (!isPlatformBrowser(PLATFORM_ID)) {
+    return true;
+  
+
+   }
+
 
   // Wait until storage is loaded
   if (!authStore.authLoaded()) {
@@ -16,4 +25,4 @@ export const authGuard: CanActivateFn = () => {
   }
 
   return true;
-};
+}
