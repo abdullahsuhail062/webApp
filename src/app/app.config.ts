@@ -9,12 +9,12 @@ import { authInterceptor } from './authInterceptor';
 import { AuthService } from './auth-service';
 import { firstValueFrom } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+   const platformId = inject(PLATFORM_ID);
+
 
 
 
 export function initAuth(auth: AuthService) {
-  return () => firstValueFrom(auth.loadUser());
-   const platformId = inject(PLATFORM_ID);
 
   return () => {
     if (!isPlatformBrowser(platformId)) {
