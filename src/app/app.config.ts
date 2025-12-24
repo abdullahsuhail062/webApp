@@ -14,28 +14,10 @@ import { isPlatformBrowser } from '@angular/common';
 
 
 
-export function initAuth(auth: AuthService) {
 
-  return () => {
-    if (!isPlatformBrowser(platformId)) {
-      // SSR / route extraction → do nothing
-      return Promise.resolve();
-    }
-
-    return firstValueFrom(auth.loadUser());
-  };
-}
 export const appConfig: ApplicationConfig = {
   providers: [ 
-     {
-      provide: APP_INITIALIZER,
-      useFactory: initAuth,
-      deps: [AuthService],
-      multi: true
-    }
-,
-    
-    provideBrowserGlobalErrorListeners(),
+     provideBrowserGlobalErrorListeners(),
     provideRouter(routes), provideClientHydration(withEventReplay()), 
   provideHttpClient(
   withInterceptors([authInterceptor]), withFetch()

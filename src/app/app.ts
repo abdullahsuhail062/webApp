@@ -1,5 +1,8 @@
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import {  Router, RouterOutlet } from '@angular/router';
+import { AuthService } from './auth-service';
+import { isPlatformBrowser } from '@angular/common';
+
 
 
 @Component({
@@ -11,9 +14,18 @@ import {  Router, RouterOutlet } from '@angular/router';
 })
 export class App  {
   protected readonly title = signal('webapp');
+   private auth = inject(AuthService);
+  private platformId = inject(PLATFORM_ID);
+
   constructor(private router: Router) {
  
  
+  }
+  
+  ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.auth.loadUser().subscribe();
+    }
   }
 
  
