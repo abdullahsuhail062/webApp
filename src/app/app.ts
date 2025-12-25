@@ -14,19 +14,13 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class App  {
   protected readonly title = signal('webapp');
-   private auth = inject(AuthService);
-  private platformId = inject(PLATFORM_ID);
+ 
 
   constructor(private router: Router) {
  
  
   }
   
-  ngOnInit() {
-    // if (isPlatformBrowser(this.platformId)) {
-    //   this.auth.loadUser().subscribe();
-    // }
-  }
 
  
 }
