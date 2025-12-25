@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { authStore } from '../auth-store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,10 +9,10 @@ import { authStore } from '../auth-store';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-
+constructor(private router: Router) {}
   logout() {
     authStore.logout()
-    alert('you have been logged out')
+    this.router.navigate(['/signin'])
     
   }
 
