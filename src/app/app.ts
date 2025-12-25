@@ -23,9 +23,9 @@ export class App  {
   }
   
   ngOnInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      this.auth.loadUser().subscribe();
-    }
+    // if (isPlatformBrowser(this.platformId)) {
+    //   this.auth.loadUser().subscribe();
+    // }
   }
 
  
