@@ -12,7 +12,7 @@ export class Dashboard {
 constructor(private router: Router) {}
   logout() {
     authStore.logout()
-    this.router.navigate(['/signin'])
+      this.router.navigateByUrl('/signin', { replaceUrl: true });
     
   }
 
