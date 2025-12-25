@@ -9,7 +9,6 @@ import { authInterceptor } from './authInterceptor';
 import { AuthService } from './auth-service';
 import { firstValueFrom } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
-   const platformId = inject(PLATFORM_ID);
 
 
 
