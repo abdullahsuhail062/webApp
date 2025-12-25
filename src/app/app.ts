@@ -15,7 +15,7 @@ export class App  {
   protected readonly title = signal('webapp');
  
 
-  constructor(private router: Router) {
+  constructor() {
  
  
   }
