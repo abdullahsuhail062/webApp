@@ -2,7 +2,7 @@ import { inject, computed, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { authStore } from './auth-store';
 import { isPlatformBrowser } from '@angular/common';
-import { AuthService } from './auth-service';
+// import { AuthService } from './auth-service';
 
 const auth = authStore;
 const router = inject(Router)

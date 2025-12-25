@@ -5,7 +5,7 @@ import { Dashboard } from './dashboard/dashboard';
 import { redirectIfLoggedInGuard } from './redirect-if-logged-in-guard';
 import { authGuard } from './auth-guard';
 import { App } from './app';
-import { userResolver } from './user-resolver';
+// import { userResolver } from './user-resolver';
 
 
 
@@ -19,7 +19,7 @@ export const routes: Routes = [
     redirectTo: 'user-registeration',
     pathMatch: 'full'
   },{
-    path: 'dashboard', component: Dashboard, resolve: {user: userResolver}, canActivate: [authGuard]
+    path: 'dashboard', component: Dashboard, canActivate: [authGuard]
   }, {
     path: 'signin',component: Signin,canActivate: [redirectIfLoggedInGuard],
     
