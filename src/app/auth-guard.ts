@@ -1,29 +1,27 @@
-import { inject, computed, PLATFORM_ID } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { authStore } from './auth-store';
 import { isPlatformBrowser } from '@angular/common';
-// import { AuthService } from './auth-service';
-
+import { authStore } from './auth-store';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { filter, map, take } from 'rxjs';
 
 export const authGuard: CanActivateFn = () => {
-  const auth = authStore;
-const router = inject(Router)
+  const router = inject(Router);
+  const platformId = inject(PLATFORM_ID);
 
-   if (!isPlatformBrowser(PLATFORM_ID)) {
+  // Allow SSR
+  if (!isPlatformBrowser(platformId)) {
     return true;
-  
-
-   }
-
-
-  // Wait until storage is loaded
-  if (!authStore.authLoaded()) {
-    return false; // Keep router from navigating temporarily
   }
 
-  if (!authStore.isLoggedIn()) {
-    return router.parseUrl('/signin');
-  }
-
-  return true;
-}
+  // Convert signal → observable and WAIT
+  return toObservable(authStore.authLoaded).pipe(
+    filter(loaded => loaded),   // wait until true
+    take(1),
+    map(() => {
+      return authStore.isLoggedIn()
+        ? true
+        : router.parseUrl('/signin');
+    })
+  );
+};
