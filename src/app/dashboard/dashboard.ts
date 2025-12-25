@@ -11,6 +11,7 @@ export class Dashboard {
 
   logout() {
     authStore.logout()
+    alert('you have been logged out')
     
   }
 
