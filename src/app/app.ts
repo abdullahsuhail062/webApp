@@ -1,6 +1,5 @@
 import { Component, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import {  Router, RouterOutlet } from '@angular/router';
-import { AuthService } from './auth-service';
 import { isPlatformBrowser } from '@angular/common';
 
 
