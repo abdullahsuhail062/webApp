@@ -1,0 +1,60 @@
+<div class="fixed inset-0 z-50 flex items-start justify-end">
+  <!-- Backdrop -->
+  <div
+    class="absolute inset-0 bg-black/20"
+    (click)="closeDialog()"
+  ></div>
+
+  <!-- Dialog -->
+  <div
+    class="relative mt-16 mr-4 w-72 rounded-xl bg-white shadow-lg ring-1 ring-black/5"
+  >
+    <!-- Profile header -->
+    <div class="flex items-center gap-3 px-4 py-4">
+      <img
+        [src]="user.avatar || 'assets/avatar.png'"
+        alt="Profile"
+        class="h-10 w-10 rounded-full object-cover"
+      />
+
+      <div class="min-w-0">
+        <p class="text-sm font-semibold text-gray-900 truncate">
+          {{ user.name || 'User' }}
+        </p>
+        <p class="text-xs text-gray-500 truncate">
+          {{ user.email }}
+        </p>
+      </div>
+    </div>
+
+    <div class="border-t"></div>
+
+    <!-- Menu -->
+    <div class="py-2">
+      <button
+        class="menu-item"
+        (click)="goTo('/dashboard')"
+      >
+        Dashboard
+      </button>
+
+      <button
+        class="menu-item"
+        (click)="goTo('/settings')"
+      >
+        Settings
+      </button>
+    </div>
+
+    <div class="border-t"></div>
+
+    <!-- Logout -->
+    <button
+      class="menu-item text-red-600 hover:bg-red-50"
+      (click)="logout()"
+    >
+      Logout
+    </button>
+  </div>
+</div>
+
