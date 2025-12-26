@@ -22,7 +22,7 @@ constructor(private router: Router) {}
   };
 
   openProfile() {
-    if (this.showProfile()) {
+    if (this.showProfile() ===false) {
       this.showProfile.set(true);
 } else {
   this.showProfile.set(false)
