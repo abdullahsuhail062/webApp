@@ -25,6 +25,11 @@ export class ProfileDialog {
 
   @Output() close = new EventEmitter();
 
+  goToDashboard() {
+    this.router.navigate(['/dashboard'])
+    this.closeDialog()
+  }
+
 
   closeDialog() {
     this.close.emit()
