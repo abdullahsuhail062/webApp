@@ -23,7 +23,7 @@ export class ProfileDialog {
     avatar?: string;
   };
 
-  @Output() close = new EventEmitter();
+  @Output() close = new EventEmitter<boolean>();
 
   goToDashboard() {
     this.router.navigate(['/dashboard'])
@@ -32,7 +32,7 @@ export class ProfileDialog {
 
 
   closeDialog() {
-    this.close.emit()
+    this.close.emit(true)
   }
 
   goTo(path: string) {
