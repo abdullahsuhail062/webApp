@@ -10,6 +10,9 @@
              text-xs font-medium text-slate-700
              cursor-pointer overflow-hidden"
       (click)="openProfile()"
+       (click)="closeProfile()"
+
+
     >
       {{ user?.name?.[0] || 'U' }}
     </div>
@@ -18,7 +21,6 @@
       <app-profile-dialog
         class="absolute right-0 mt-3 z-50"
         [user]="user"
-        (click)="closeProfile()"
       />
     }
   </div>
