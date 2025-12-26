@@ -1,12 +1,25 @@
-<img
-  [src]="user.avatar"
-  class="h-8 w-8 rounded-full cursor-pointer"
-  (click)="openProfile()"
-/>
+<header class="h-14 w-full flex items-center justify-between px-6 bg-white border-b">
+  <!-- Left: App name / logo -->
+  <div class="text-lg font-semibold text-gray-800">
+    My Dashboard
+  </div>
 
-@if (showProfile()) {
-  <app-profile-dialog
-    [user]="user"
-    (close)="closeProfile()"
-  />
-}
+  <!-- Right: Profile avatar -->
+  <div class="relative">
+    <img
+      [src]="user?.avatar || '/assets/avatar-default.png'"
+      alt="User avatar"
+      class="h-9 w-9 rounded-full object-cover cursor-pointer ring-1 ring-gray-300 hover:ring-blue-500 transition"
+      (click)="openProfile()"
+    />
+
+    @if (showProfile()) {
+      <app-profile-dialog
+        class="absolute right-0 mt-3 z-50"
+        [user]="user"
+        (close)="closeProfile()"
+      />
+    }
+  </div>
+</header>
+
