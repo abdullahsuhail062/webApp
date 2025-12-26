@@ -1,60 +1,34 @@
-<div class="fixed inset-0 z-50 flex items-start justify-end">
-  <!-- Backdrop -->
-  <div
-    class="absolute inset-0 bg-black/20"
-    (click)="closeDialog()"
-  ></div>
-
-  <!-- Dialog -->
-  <div
-    class="relative mt-16 mr-4 w-72 rounded-xl bg-white shadow-lg ring-1 ring-black/5"
-  >
-    <!-- Profile header -->
-    <div class="flex items-center gap-3 px-4 py-4">
-      <img
-        [src]="user.avatar || 'assets/avatar.png'"
-        alt="Profile"
-        class="h-10 w-10 rounded-full object-cover"
-      />
-
-      <div class="min-w-0">
-        <p class="text-sm font-semibold text-gray-900 truncate">
-          {{ user.name || 'User' }}
-        </p>
-        <p class="text-xs text-gray-500 truncate">
-          {{ user.email }}
-        </p>
-      </div>
-    </div>
-
-    <div class="border-t"></div>
-
-    <!-- Menu -->
-    <div class="py-2">
-      <button
-        class="menu-item"
-        (click)="goTo('/dashboard')"
-      >
-        Dashboard
-      </button>
-
-      <button
-        class="menu-item"
-        (click)="goTo('/settings')"
-      >
-        Settings
-      </button>
-    </div>
-
-    <div class="border-t"></div>
-
-    <!-- Logout -->
-    <button
-      class="menu-item text-red-600 hover:bg-red-50"
-      (click)="logout()"
+<div class="w-64 rounded-lg shadow-lg bg-white border border-slate-200">
+  <!-- User info -->
+  <div class="flex items-start gap-3 px-4 py-3 border-b">
+    <div
+      class="h-9 w-9 rounded-full bg-slate-200
+             flex items-center justify-center
+             text-xs font-semibold text-slate-700"
     >
-      Logout
-    </button>
-  </div>
-</div>
+      {{ user?.name?.[0] || 'U' }}
+    </div>
 
+    <div class="flex flex-col text-left">
+      <span class="text-sm font-medium text-slate-800">
+        {{ user?.name }}
+      </span>
+      <span class="text-xs text-slate-500 truncate">
+        {{ user?.email }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Menu items -->
+  <button
+    class="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-100"
+  >
+    Profile
+  </button>
+
+  <button
+    class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+  >
+    Sign out
+  </button>
+</div>
