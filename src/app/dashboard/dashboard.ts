@@ -26,7 +26,7 @@ constructor(private router: Router) {}
   }
 
   closeProfile() {
-    this.showProfile.set(false);
+    this.showProfile();
   }
  
     
