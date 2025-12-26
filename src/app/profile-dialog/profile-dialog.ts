@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, input, Output, output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { authStore } from '../auth-store';
 import { User } from '../models/user';
 
@@ -8,7 +8,7 @@ import { User } from '../models/user';
 @Component({
   selector: 'app-profile-dialog',
   standalone: true,
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './profile-dialog.html',
   styleUrl: './profile-dialog.css',
 })
