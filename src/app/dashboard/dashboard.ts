@@ -22,7 +22,11 @@ constructor(private router: Router) {}
   };
 
   openProfile() {
-    this.showProfile.set(true);
+    if (this.showProfile()) {
+      this.showProfile.set(true);
+} else {
+  this.showProfile.set(false)
+}
   }
 
   closeProfile() {
