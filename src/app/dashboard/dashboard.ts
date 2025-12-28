@@ -2,6 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { authStore } from '../auth-store';
 import { Router } from '@angular/router';
 import { ProfileDialog } from '../profile-dialog/profile-dialog';
+import { User } from '../models/user';
 
 
 @Component({
@@ -12,6 +13,7 @@ import { ProfileDialog } from '../profile-dialog/profile-dialog';
 })
 export class Dashboard {
 constructor(private router: Router) {}
+user = signal<User>(authStore.user())
 
  showProfile = signal(false);
 
