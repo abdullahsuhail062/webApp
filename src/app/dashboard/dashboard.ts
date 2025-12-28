@@ -15,11 +15,7 @@ constructor(private router: Router) {}
 
  showProfile = signal(false);
 
-  user = {
-    name: 'Chand',
-    email: 'chand@example.com',
-    avatar: 'assets/avatar.png',
-  };
+  
 
   openProfile() {
     if (this.showProfile() ===false) {

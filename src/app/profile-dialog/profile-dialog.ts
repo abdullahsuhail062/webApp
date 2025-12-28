@@ -17,13 +17,8 @@ export class ProfileDialog {
 
   constructor(private router: Router){}
 
- @Input({ required: true }) user!: {
-    name?: string;
-    email?: string;
-    avatar?: string;
-  };
-
-  @Output() close = new EventEmitter<boolean>();
+ user = input<User>()
+ close = output<boolean>()
 
   goToDashboard() {
     this.router.navigate(['/dashboard'])
