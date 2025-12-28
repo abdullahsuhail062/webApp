@@ -15,7 +15,7 @@
 
 
     >
-    {{user()?.username?.[0]}}
+    {{user()?.username?.[0] || user()?.username}}
     </div>
 
     @if (showProfile()) {
