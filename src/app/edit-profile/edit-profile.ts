@@ -2,6 +2,8 @@ import { Component, effect, input, output, signal } from '@angular/core';
 import { ProfileDialog } from '../profile-dialog/profile-dialog';
 import { Setting } from '../setting/setting';
 import { User } from '../models/user';
+import { authStore } from '../auth-store';
+
 
 
 @Component({
@@ -15,6 +17,7 @@ export class EditProfile {
   close = output<boolean>()
   user = input<User>()
   save = output<User>()
+  authStore = authStore
 
 
   
