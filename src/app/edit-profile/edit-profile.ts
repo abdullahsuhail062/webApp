@@ -30,7 +30,6 @@ export class EditProfile {
   
 
   constructor() {
-  console.log(this.user(),' signal is working fine');
   
     // Sync input user → form signals
     effect(() => {
@@ -60,14 +59,14 @@ export class EditProfile {
 
     this.save.emit({
       
-      username: this.username(),
+      name: this.username(),
       avatar: this.avatar()
       // password can be sent separately if needed
   });
   }
 
   closeEdit() {
-    this.close.emit(true);
+    this.close.emit(false);
   }
 
 
