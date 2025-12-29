@@ -24,6 +24,8 @@ user = signal<User>(authStore.user())
   openProfile() {
     if (this.showProfile() ===false) {
       this.showProfile.set(true);
+      console.log(this.user().username, ' checking user for username');
+      
 } else {
   this.showProfile.set(false)
 }
