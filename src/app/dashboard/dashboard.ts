@@ -13,8 +13,7 @@ import { User } from '../models/user';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-constructor(private router: Router) {console.log(this.user().username);
-}
+constructor(private router: Router) {}
 user = signal<User>(authStore.user())
 
  showProfile = signal(false);
@@ -24,7 +23,6 @@ user = signal<User>(authStore.user())
   openProfile() {
     if (this.showProfile() ===false) {
       this.showProfile.set(true);
-      console.log(this.user().username, ' checking user for username');
       
 } else {
   this.showProfile.set(false)

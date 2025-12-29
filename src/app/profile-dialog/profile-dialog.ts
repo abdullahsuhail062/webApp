@@ -17,15 +17,17 @@ import { Setting } from '../setting/setting';
 export class ProfileDialog {
  editProfileUser = signal<User>(authStore.user())
  user = input<User>()
+ 
   editMode = signal(false);
  close = output<boolean>()
 
-  constructor(private router: Router){console.log(this.editProfile());
-  }
+  constructor(private router: Router){}
 
 
   goToDashboard() {
     this.router.navigate(['/dashboard'])
+    console.log(this.user()?.name);
+    
     this.closeDialog()
   }
   openSettings() {
