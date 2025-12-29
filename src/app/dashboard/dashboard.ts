@@ -13,7 +13,8 @@ import { User } from '../models/user';
   styleUrl: './dashboard.css',
 })
 export class Dashboard {
-constructor(private router: Router) {}
+constructor(private router: Router) {console.log(this.user().username);
+}
 user = signal<User>(authStore.user())
 
  showProfile = signal(false);
