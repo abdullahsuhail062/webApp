@@ -15,15 +15,14 @@ import { Setting } from '../setting/setting';
   styleUrl: './profile-dialog.css',
 })
 export class ProfileDialog {
- 
-
-  constructor(private router: Router){}
-editProfileUser = signal<User>(authStore.user())
+ editProfileUser = signal<User>(authStore.user())
  user = input<User>()
-
-   editMode = signal(false);
-
+  editMode = signal(false);
  close = output<boolean>()
+
+  constructor(private router: Router){console.log(this.editProfile());
+  }
+
 
   goToDashboard() {
     this.router.navigate(['/dashboard'])
