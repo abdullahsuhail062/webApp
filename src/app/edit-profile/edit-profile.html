@@ -1,0 +1,73 @@
+<!-- Avatar -->
+<div class="flex flex-col items-center mb-6">
+  <img
+    [src]="avatar()"
+    class="w-28 h-28 rounded-full object-cover mb-3"
+    alt="Profile"
+  />
+
+  <label class="text-sm text-indigo-600 cursor-pointer hover:underline">
+    Change photo
+    <input
+      type="file"
+      class="hidden"
+      accept="image/*"
+      (change)="onFileChange($event)"
+    />
+  </label>
+</div>
+
+<!-- FORM -->
+<form class="space-y-4" (submit)="submit(); $event.preventDefault()">
+  <!-- Username -->
+ <div>
+  <label class="block text-sm font-medium mb-1">Username</label>
+  <input
+    type="text"
+    [value]="user()?.username"
+    (input)="username.set($any($event.target).value)"
+    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+  />
+</div>
+
+
+  <!-- New Password -->
+  <div>
+    <label class="block text-sm font-medium mb-1">New Password</label>
+    <input
+      type="password"
+      [value]="password()"
+      (input)="password.set($any($event.target).value)"
+      class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+    />
+  </div>
+
+  <!-- Confirm Password -->
+  <div>
+    <label class="block text-sm font-medium mb-1">Confirm Password</label>
+    <input
+      type="password"
+      [value]="confirmPassword()"
+      (input)="confirmPassword.set($any($event.target).value)"
+      class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+    />
+  </div>
+
+  <!-- Actions -->
+  <div class="flex flex-col sm:flex-row gap-3 pt-4">
+    <button
+      type="button"
+      class="w-full sm:w-auto px-4 py-2 border rounded-lg"
+      (click)="closeEdit()"
+    >
+      Cancel
+    </button>
+
+    <button
+      type="submit"
+      class="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+    >
+      Save Changes
+    </button>
+  </div>
+</form>

@@ -7,6 +7,7 @@ import { User } from '../models/user';
 
 @Component({
   selector: 'app-dashboard',
+  standalone: true,
   imports: [ProfileDialog],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
