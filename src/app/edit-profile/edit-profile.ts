@@ -26,7 +26,12 @@ export class EditProfile {
   confirmPassword = signal('');
   avatar = signal<string>('https://i.pravatar.cc/120');
 
+  
+  
+
   constructor() {
+  console.log(this.user(),' signal is working fine');
+  
     // Sync input user → form signals
     effect(() => {
       if (this.user()) {
