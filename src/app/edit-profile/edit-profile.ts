@@ -14,10 +14,9 @@ import { authStore } from '../auth-store';
 })
 export class EditProfile {
   updateUser = output<User>()
-  close = output<boolean>()
+  close = output<void>()
   user = input<User>()
   save = output<User>()
-  authStore = authStore
 
 
   
@@ -66,14 +65,14 @@ export class EditProfile {
   }
 
   closeEdit() {
-    this.close.emit(false);
+    this.close.emit();
   }
 
 
  
   onSave(user: User) {
   this.updateUser.emit(user)
-  this.close.emit(true)
+  this.close.emit()
 }
 
 updateUserFn(user: User) {

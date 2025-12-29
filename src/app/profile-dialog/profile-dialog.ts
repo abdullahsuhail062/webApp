@@ -26,7 +26,6 @@ export class ProfileDialog {
 
   goToDashboard() {
     this.router.navigate(['/dashboard'])
-    
     this.closeDialog()
   }
   openSettings() {
