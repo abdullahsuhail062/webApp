@@ -18,7 +18,7 @@ export class ProfileDialog {
  
 
   constructor(private router: Router){}
-
+editProfileUser = signal<User>(authStore.user())
  user = input<User>()
 
    editMode = signal(false);
