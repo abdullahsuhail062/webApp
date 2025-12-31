@@ -23,10 +23,11 @@
 
   <!-- Edit profile -->
   <button
-    (click)="editProfile()"
-    class="w-full flex items-center gap-3 px-4 py-2 text-sm
+    (click)="editProfile($event)"
+    aria-label="Edit profile"
+    class="w-full sm:w-auto flex items-center gap-3 px-4 py-2 text-sm
            text-slate-700 hover:bg-slate-100
-           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+           focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md"
   >
     <span class="text-slate-400">✏️</span>
     <span>Edit profile</span>
@@ -35,9 +36,10 @@
   <!-- Dashboard -->
   <button
     (click)="goToDashboard()"
-    class="w-full flex items-center gap-3 px-4 py-2 text-sm
+    aria-label="Open dashboard"
+    class="w-full sm:w-auto flex items-center gap-3 px-4 py-2 text-sm
            text-slate-700 hover:bg-slate-100
-           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+           focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md"
   >
     <span class="text-slate-400">🏠</span>
     <span>Dashboard</span>
@@ -46,9 +48,10 @@
   <!-- Settings -->
   <button
     (click)="openSettings()"
-    class="w-full flex items-center gap-3 px-4 py-2 text-sm
+    aria-label="Open settings"
+    class="w-full sm:w-auto flex items-center gap-3 px-4 py-2 text-sm
            text-slate-700 hover:bg-slate-100
-           focus:outline-none focus:ring-2 focus:ring-indigo-500"
+           focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-md"
   >
     <span class="text-slate-400">⚙️</span>
     <span>Settings</span>
@@ -59,28 +62,11 @@
   <!-- Logout -->
   <button
     (click)="logout()"
-    class="w-full flex items-center gap-3 px-4 py-2 text-sm
-           text-red-600 hover:bg-red-50"
+    aria-label="Sign out"
+    class="w-full sm:w-auto flex items-center gap-3 px-4 py-2 text-sm
+           text-red-600 hover:bg-red-50 focus:outline-none rounded-md"
   >
     <span>🚪</span>
     <span>Sign out</span>
   </button>
 </div>
-
-@if (!editMode()) {
-  <!-- profile view -->
-  <button (click)="openEdit()">Edit profile</button>
-}
-
-@if (editMode()) {
-  <app-edit-profile
-    [user]="editProfileUser()"
-    (cancel)="closeEdit()"
-    (save)="onSave($event)"
-/>
-
-}
-
-<app-setting
-[user]="user()"
-/>

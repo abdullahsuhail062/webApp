@@ -1,14 +1,20 @@
-import { Component, effect, input, output, signal } from '@angular/core';
-import { ProfileDialog } from '../profile-dialog/profile-dialog';
+import { Component, effect, input, output, signal, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { Setting } from '../setting/setting';
-import { User } from '../models/user';
-import { authStore } from '../auth-store';
+import { User } from '../../../models/user';
+import { authStore } from '../../../auth-store';
+
 
 
 
 @Component({
   selector: 'app-edit-profile',
-  imports: [Setting],
+  imports: [ MatDialogModule, MatButtonModule, MatInputModule, MatFormFieldModule, MatIconModule, CommonModule],
   templateUrl: './edit-profile.html',
   styleUrl: './edit-profile.css',
 })
@@ -28,13 +34,16 @@ export class EditProfile {
   
   
 
-  constructor() {
+  constructor(
+    public dialogRef: MatDialogRef<EditProfile>,
+    @Inject(MAT_DIALOG_DATA) public data: User
+  ) {
   
     // Sync input user → form signals
     effect(() => {
-      if (this.user()) {
-        this.username.set(this.username());
-        this.avatar.set(this.avatar() ?? 'https://i.pravatar.cc/120');
+      if (this.data) {
+        this.username.set(this.data.name as string);
+        this.avatar.set(this.data.avatar ?? 'https://i.pravatar.cc/120');
       }
     });
   }
@@ -50,34 +59,28 @@ export class EditProfile {
     reader.readAsDataURL(file);
   }
 
+  resetAvatar() {
+    
+  }
+
+
   submit() {
     if (this.password() && this.password() !== this.confirmPassword()) {
       alert('Passwords do not match');
       return;
     }
 
-    this.save.emit({
-      
+
+    const updatedUser: User = {
+      ...this.data,
       name: this.username(),
       avatar: this.avatar()
-      // password can be sent separately if needed
-  });
+    };
+
+    this.dialogRef.close(updatedUser);
   }
 
   closeEdit() {
-    this.close.emit();
+    this.dialogRef.close();
   }
-
-
- 
-  onSave(user: User) {
-  this.updateUser.emit(user)
-  this.close.emit()
-}
-
-updateUserFn(user: User) {
-
-}
-
-
 }

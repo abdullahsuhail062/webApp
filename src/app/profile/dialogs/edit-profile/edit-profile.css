@@ -1,0 +1,41 @@
+/* Keeping only a minimal host rule; layout handled by Tailwind utilities. */
+:host {
+	display: block;
+}
+
+/* Facebook-like dialog container tweaks */
+.dialog-card {
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+	overflow: hidden;
+}
+
+/* Make mat-form-field inputs a bit taller on mobile for touch */
+.mat-form-field-wrapper .mat-form-field-flex {
+	min-height: 44px;
+}
+
+/* Ensure icon buttons are compact on mobile */
+button[mat-icon-button] {
+	width: 36px;
+	height: 36px;
+	min-width: 36px;
+}
+
+/* Header's mat-icon close styling */
+.dialog-card .mat-icon {
+	vertical-align: middle;
+}
+
+/* Make the filled mat-form-field look cleaner and FB-like */
+.mat-form-field-appearance-fill .mat-form-field-flex {
+	background: #fafafa;
+	border-radius: 6px;
+}
+
+/* Slight border for profile picture */
+.dialog-card img {
+	border: 2px solid rgba(0,0,0,0.04);
+}
+

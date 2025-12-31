@@ -1,0 +1,25 @@
+<div mat-dialog-content>
+  <h2 mat-dialog-title>Settings</h2>
+  
+  <div class="space-y-4">
+    <!-- User Settings Options -->
+    <div class="flex items-center justify-between">
+      <label class="text-sm font-medium">Notifications</label>
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <label class="text-sm font-medium">Dark Mode</label>
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <label class="text-sm font-medium">Privacy</label>
+      <mat-slide-toggle></mat-slide-toggle>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="closeEdit()">Close</button>
+</div>

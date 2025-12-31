@@ -8,6 +8,7 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { authInterceptor } from './authInterceptor';
 import { firstValueFrom } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { provideAnimations } from '@angular/platform-browser/animations';
 
 
 
@@ -19,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes), provideClientHydration(withEventReplay()), 
   provideHttpClient(
   withInterceptors([authInterceptor]), withFetch()
-)
-
+),
+  provideAnimations()
   ]
 };

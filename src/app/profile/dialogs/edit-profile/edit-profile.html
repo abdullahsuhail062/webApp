@@ -1,73 +1,144 @@
-<!-- Avatar -->
-<div class="flex flex-col items-center mb-6">
-  <img
-    [src]="avatar()"
-    class="w-28 h-28 rounded-full object-cover mb-3"
-    alt="Profile"
-  />
+<!-- Overlay -->
+<div
+  class="fixed inset-0 z-50 bg-black/40 flex items-start justify-center
+         px-4 pt-6 sm:pt-10"
+>
+  <!-- Dialog -->
+  <div
+    class="dialog-card max-w-lg w-full bg-white rounded-xl shadow-lg
+           max-h-[85vh] flex flex-col overflow-hidden
+           -translate-y-4 sm:-translate-y-6"
+  >
 
-  <label class="text-sm text-indigo-600 cursor-pointer hover:underline">
-    Change photo
-    <input
-      type="file"
-      class="hidden"
-      accept="image/*"
-      (change)="onFileChange($event)"
-    />
-  </label>
-</div>
-
-<!-- FORM -->
-<form class="space-y-4" (submit)="submit(); $event.preventDefault()">
-  <!-- Username -->
- <div>
-  <label class="block text-sm font-medium mb-1">Username</label>
-  <input
-    type="text"
-    [value]="user()?.name"
-    (input)="username.set($any($event.target).value)"
-    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-  />
-</div>
-
-
-  <!-- New Password -->
-  <div>
-    <label class="block text-sm font-medium mb-1">New Password</label>
-    <input
-      type="password"
-      [value]="password()"
-      (input)="password.set($any($event.target).value)"
-      class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-    />
-  </div>
-
-  <!-- Confirm Password -->
-  <div>
-    <label class="block text-sm font-medium mb-1">Confirm Password</label>
-    <input
-      type="password"
-      [value]="confirmPassword()"
-      (input)="confirmPassword.set($any($event.target).value)"
-      class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-    />
-  </div>
-
-  <!-- Actions -->
-  <div class="flex flex-col sm:flex-row gap-3 pt-4">
-    <button
-      type="button"
-      class="w-full sm:w-auto px-4 py-2 border rounded-lg"
-      (click)="closeEdit()"
+    <!-- Header -->
+    <div
+      class="bg-[#1877F2] px-4 py-3 flex items-center justify-between"
     >
-      Cancel
-    </button>
+      <h2 class="text-white text-lg font-semibold">Edit profile</h2>
 
-    <button
-      type="submit"
-      class="w-full sm:w-auto px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+      <button
+        aria-label="Close"
+        (click)="closeEdit()"
+        class="text-white hover:opacity-90 -mr-2 flex-shrink-0"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Body (Scrollable) -->
+    <div class="px-5 py-6 space-y-6 overflow-y-auto flex-1">
+
+      <!-- Avatar -->
+      <div class="flex flex-col items-center gap-3">
+        <div class="relative w-28 h-28 sm:w-32 sm:h-32">
+          <img
+            [src]="avatar()"
+            alt="Profile photo"
+            class="w-full h-full object-cover rounded-full border"
+          />
+
+          <!-- Photo actions -->
+          <div class="absolute -right-2 -bottom-2 flex gap-2">
+            <input
+              #fileInput
+              type="file"
+              accept="image/*"
+              hidden
+              (change)="onFileChange($event)"
+            />
+
+            <button
+              mat-icon-button
+              color="primary"
+              aria-label="Change photo"
+              (click)="fileInput.click()"
+              class="bg-white shadow"
+            >
+              <mat-icon>photo_camera</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              aria-label="Reset photo"
+              (click)="resetAvatar()"
+              class="bg-white shadow"
+            >
+              <mat-icon>refresh</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <p class="text-xs text-gray-500 text-center">
+          Profile photo • Visible to everyone
+        </p>
+      </div>
+
+      <!-- Form -->
+      <form
+        class="space-y-4"
+        (submit)="submit(); $event.preventDefault()"
+      >
+
+        <!-- Username -->
+        <div>
+          <label class="block text-sm font-medium mb-1">Username</label>
+          <input
+            type="text"
+            [value]="user()?.name"
+            (input)="username.set($any($event.target).value)"
+            class="w-full px-3 py-2 border rounded-lg
+                   focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- New Password -->
+        <div>
+          <label class="block text-sm font-medium mb-1">New Password</label>
+          <input
+            type="password"
+            [value]="password()"
+            (input)="password.set($any($event.target).value)"
+            class="w-full px-3 py-2 border rounded-lg
+                   focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label class="block text-sm font-medium mb-1">Confirm Password</label>
+          <input
+            type="password"
+            [value]="confirmPassword()"
+            (input)="confirmPassword.set($any($event.target).value)"
+            class="w-full px-3 py-2 border rounded-lg
+                   focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+          />
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div
+      class="px-5 py-4 bg-gray-50 flex flex-col-reverse
+             sm:flex-row justify-end gap-3 sticky bottom-0"
     >
-      Save Changes
-    </button>
+      <button
+        mat-button
+        (click)="closeEdit()"
+        class="w-full sm:w-auto"
+      >
+        Cancel
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="submit()"
+        class="w-full sm:w-auto bg-[#1877F2] text-white"
+      >
+        Save
+      </button>
+    </div>
+
   </div>
-</form>
+</div>
