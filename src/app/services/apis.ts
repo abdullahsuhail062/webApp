@@ -23,5 +23,9 @@ private apiUrl = environment.apiUrl
   loginUser(body: {email: string, password: string}): Observable<any> {
     return this.http.post(`${this.apiUrl}/users/loginUser`, {body})
   }
+
+  updateProfile(data: FormData) {
+    return this.http.post(`${this.apiUrl}/users/profileUpdate`, data);
+  }
   
 }

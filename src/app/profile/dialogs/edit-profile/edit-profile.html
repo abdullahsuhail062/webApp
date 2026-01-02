@@ -6,7 +6,7 @@
   <!-- Dialog -->
   <div
     class="dialog-card max-w-lg w-full bg-white rounded-xl shadow-lg
-           max-h-[85vh] flex flex-col overflow-hidden
+           flex flex-col overflow-hidden
            -translate-y-4 sm:-translate-y-6"
   >
 
@@ -17,101 +17,87 @@
       <h2 class="text-white text-lg font-semibold">Edit profile</h2>
 
       <button
+        type="button"
         aria-label="Close"
         (click)="closeEdit()"
-        class="text-white hover:opacity-90 -mr-2 flex-shrink-0"
+        class="text-white hover:opacity-90 ml-2 flex-shrink-0 p-1 rounded-full"
       >
-        <mat-icon>close</mat-icon>
+        <span class="text-white text-xl leading-none">✕</span>
       </button>
     </div>
 
-    <!-- Body (Scrollable) -->
-    <div class="px-5 py-6 space-y-6 overflow-y-auto flex-1">
+    <!-- Body -->
+    <div class="px-4 py-5 sm:px-5 sm:py-6 space-y-5">
 
-      <!-- Avatar -->
+      <!-- Avatar Section -->
       <div class="flex flex-col items-center gap-3">
-        <div class="relative w-28 h-28 sm:w-32 sm:h-32">
+        <div class="relative w-20 h-20 sm:w-24 sm:h-24 md:w-28 md:h-28">
           <img
             [src]="avatar()"
             alt="Profile photo"
-            class="w-full h-full object-cover rounded-full border"
+            class="w-full h-full object-cover rounded-full border-2 border-gray-300"
           />
-
-          <!-- Photo actions -->
-          <div class="absolute -right-2 -bottom-2 flex gap-2">
-            <input
-              #fileInput
-              type="file"
-              accept="image/*"
-              hidden
-              (change)="onFileChange($event)"
-            />
-
-            <button
-              mat-icon-button
-              color="primary"
-              aria-label="Change photo"
-              (click)="fileInput.click()"
-              class="bg-white shadow"
-            >
-              <mat-icon>photo_camera</mat-icon>
-            </button>
-
-            <button
-              mat-icon-button
-              aria-label="Reset photo"
-              (click)="resetAvatar()"
-              class="bg-white shadow"
-            >
-              <mat-icon>refresh</mat-icon>
-            </button>
-          </div>
         </div>
 
-        <p class="text-xs text-gray-500 text-center">
-          Profile photo • Visible to everyone
-        </p>
+        <!-- Action buttons below image -->
+        <div class="flex gap-2">
+          <input
+            #fileInput
+            type="file"
+            accept="image/*"
+            hidden
+            (change)="onFileChange($event)"
+          />
+
+          <button
+            type="button"
+            (click)="fileInput.click()"
+            aria-label="Change photo"
+            class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors cursor-pointer"
+          >
+            Change photo
+          </button>
+
+        </div>
+        <p class="mt-1 text-xs text-gray-500 text-center">Tap camera to change</p>
       </div>
 
-      <!-- Form -->
-      <form
-        class="space-y-4"
-        (submit)="submit(); $event.preventDefault()"
-      >
 
+      <!-- Form -->
+      <form class="space-y-3">
         <!-- Username -->
         <div>
-          <label class="block text-sm font-medium mb-1">Username</label>
+          <label class="block text-xs sm:text-sm font-medium mb-1">Display Name</label>
           <input
             type="text"
-            [value]="user()?.name"
+            [value]="username()"
             (input)="username.set($any($event.target).value)"
-            class="w-full px-3 py-2 border rounded-lg
-                   focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            class="w-full px-3 py-1.5 sm:py-2 text-sm border border-gray-300 rounded-lg
+                   focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-transparent"
           />
         </div>
 
         <!-- New Password -->
         <div>
-          <label class="block text-sm font-medium mb-1">New Password</label>
+          <label class="block text-xs sm:text-sm font-medium mb-1">New Password</label>
           <input
             type="password"
             [value]="password()"
             (input)="password.set($any($event.target).value)"
-            class="w-full px-3 py-2 border rounded-lg
-                   focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            class="w-full px-3 py-1.5 sm:py-2 text-sm border border-gray-300 rounded-lg
+                   focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-transparent"
           />
         </div>
 
         <!-- Confirm Password -->
         <div>
-          <label class="block text-sm font-medium mb-1">Confirm Password</label>
+          <label class="block text-xs sm:text-sm font-medium mb-1">Confirm Password</label>
           <input
             type="password"
             [value]="confirmPassword()"
             (input)="confirmPassword.set($any($event.target).value)"
-            class="w-full px-3 py-2 border rounded-lg
-                   focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+            class="w-full px-3 py-1.5 sm:py-2 text-sm border border-gray-300 rounded-lg
+                   focus:ring-2 focus:ring-blue-500 focus:outline-none focus:border-transparent"
           />
         </div>
       </form>
@@ -119,26 +105,36 @@
 
     <!-- Footer -->
     <div
-      class="px-5 py-4 bg-gray-50 flex flex-col-reverse
-             sm:flex-row justify-end gap-3 sticky bottom-0"
+      class="px-4 py-3 sm:px-5 sm:py-4 bg-gray-50 flex flex-col-reverse
+             sm:flex-row justify-end gap-2 sm:gap-3"
     >
-      <button
-        mat-button
-        (click)="closeEdit()"
-        class="w-full sm:w-auto"
-      >
-        Cancel
-      </button>
+     <button
+  type="button"
+  mat-button
+  (click)="closeEdit()"
+  class="w-full sm:w-auto px-4 py-2 text-sm
+         bg-gray-100 text-gray-700 font-medium
+         rounded-lg border border-gray-300
+         hover:bg-gray-200
+         focus:ring-2 focus:ring-offset-1 focus:ring-gray-300"
+  aria-label="Cancel"
+>
+  Cancel
+</button>
 
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="submit()"
-        class="w-full sm:w-auto bg-[#1877F2] text-white"
-      >
-        Save
-      </button>
+
+<button
+  mat-raised-button
+  (click)="submit()"
+  class="w-full sm:w-auto px-4 py-2 text-sm
+         bg-blue-600 text-white font-semibold
+         rounded-lg
+         hover:bg-blue-700
+         focus:ring-2 focus:ring-offset-1 focus:ring-blue-500"
+>
+  Save
+</button>
+
     </div>
 
   </div>
-</div>

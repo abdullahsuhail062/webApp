@@ -7,7 +7,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { Setting } from '../setting/setting';
 import { User } from '../../../models/user';
-import { authStore } from '../../../auth-store';
+import { profileSignal } from '../../profile.state';
+import { Apis } from '../../../services/apis';
 
 
 
@@ -34,7 +35,7 @@ export class EditProfile {
   
   
 
-  constructor(
+  constructor(private apiService: Apis,
     public dialogRef: MatDialogRef<EditProfile>,
     @Inject(MAT_DIALOG_DATA) public data: User
   ) {
@@ -43,10 +44,7 @@ export class EditProfile {
     effect(() => {
       if (this.data) {
         this.username.set(this.data.name as string);
-        this.avatar.set(this.data.avatar ?? 'https://i.pravatar.cc/120');
-      }
-    });
-  }
+        this.avatar.set(this.data.avatar ?? 'https://i.pravatar.cc/120');}});}
 
   onFileChange(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
@@ -54,33 +52,36 @@ export class EditProfile {
 
     const reader = new FileReader();
     reader.onload = () => {
-      this.avatar.set(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  }
-
-  resetAvatar() {
-    
-  }
+      this.avatar.set(reader.result as string);}}
 
 
   submit() {
     if (this.password() && this.password() !== this.confirmPassword()) {
       alert('Passwords do not match');
-      return;
-    }
-
-
-    const updatedUser: User = {
-      ...this.data,
-      name: this.username(),
-      avatar: this.avatar()
-    };
-
-    this.dialogRef.close(updatedUser);
-  }
+      return;}
+    this.updateProfile()
+    this.userUpdaterFn()}
+   
 
   closeEdit() {
-    this.dialogRef.close();
+    this.dialogRef.close();}
+
+  updateProfile() {
+     const formData = new FormData();
+  formData.append('username', this.username());
+    const profile = profileSignal()
+  if (profile.image instanceof File) {
+    formData.append('image', this.avatar());}
+  this.apiService.updateProfile(formData).subscribe({
+    next: (res) => {console.log('profile updated successfully')}})}
+  
+
+  userUpdaterFn() {
+     const updatedUser: User = {
+      ...this.data,
+      name: this.username(),
+      avatar: this.avatar()};
+    this.dialogRef.close(updatedUser);
   }
+  
 }
