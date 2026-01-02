@@ -24,7 +24,7 @@ private apiUrl = environment.apiUrl
     return this.http.post(`${this.apiUrl}/users/loginUser`, {body})
   }
 
-  updateProfile(data: FormData) {
+  updateProfile(data: any) {
     return this.http.patch(`${this.apiUrl}/users/profileUpdate`, data);
   }
   
