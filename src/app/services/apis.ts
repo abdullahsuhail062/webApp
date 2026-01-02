@@ -25,6 +25,8 @@ private apiUrl = environment.apiUrl
   }
 
   updateProfile(data: any) {
+    console.log(data, 'data being sent');
+    
     return this.http.patch(`${this.apiUrl}/users/profileUpdate`, data);
   }
   
