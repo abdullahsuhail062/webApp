@@ -74,7 +74,8 @@ export class EditProfile {
     const profile = profileSignal()
   if (profile.image instanceof File) {
     formData.append('image', this.avatar());}
-  this.apiService.updateProfile(this.username()).subscribe({
+    const name = this.username()
+  this.apiService.updateProfile(name).subscribe({
     next: (res) => {console.log('profile updated successfully')}})}
   
 
