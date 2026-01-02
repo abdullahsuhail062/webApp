@@ -59,7 +59,6 @@ export class EditProfile {
     if (this.password() && this.password() !== this.confirmPassword()) {
       alert('Passwords do not match');
       return;}
-      console.log(this.username());
       
     this.updateProfile()
     this.userUpdaterFn()}
@@ -75,6 +74,8 @@ export class EditProfile {
   if (profile.image instanceof File) {
     formData.append('image', this.avatar());}
     const name = this.username()
+    console.log(name);
+    
   this.apiService.updateProfile(name).subscribe({
     next: (res) => {console.log('profile updated successfully')}})}
   
