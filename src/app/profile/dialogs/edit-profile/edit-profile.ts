@@ -59,6 +59,8 @@ export class EditProfile {
     if (this.password() && this.password() !== this.confirmPassword()) {
       alert('Passwords do not match');
       return;}
+      console.log(this.username());
+      
     this.updateProfile()
     this.userUpdaterFn()}
    
