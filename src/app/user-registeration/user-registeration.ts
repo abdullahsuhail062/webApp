@@ -44,7 +44,7 @@ constructor(private router: Router, private apiService: Apis){
           authStore.setAuth(response.user, response.token);
           this.loading.set(false);
           this.router.navigate(['/dashboard']);
-          console.log(authStore.user());
+          console.log(response.user,'toknen being verified! ');
           
   
         },
