@@ -9,6 +9,7 @@ import { Setting } from '../setting/setting';
 import { User } from '../../../models/user';
 import { profileSignal } from '../../profile.state';
 import { Apis } from '../../../services/apis';
+import { authStore } from '../../../auth-store';
 
 
 
@@ -31,6 +32,7 @@ export class EditProfile {
   password = signal('');
   confirmPassword = signal('');
   avatar = signal<string>('https://i.pravatar.cc/120');
+  loading = signal(false);
 
   
   
@@ -52,40 +54,62 @@ export class EditProfile {
 
     const reader = new FileReader();
     reader.onload = () => {
-      this.avatar.set(reader.result as string);}}
+      this.avatar.set(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  }
 
+  // Prepare the payload object for the API. Keeps logic centralized.
+  preparePayload() {
+    const name = this.username();
+    const payload: any = { username: name };
+    if (this.avatar() && typeof this.avatar() === 'string') {
+      payload.avatar = this.avatar();
+    }
+    return payload;
+  }
+
+  // Call the API and handle response, errors, and global state update.
+  callUpdateProfile(payload: any) {
+    this.loading.set(true);
+    this.apiService.updateProfile(payload).subscribe({
+      next: (res: any) => {
+        const updatedUser = res?.user ?? { ...this.data, name: payload.username, avatar: payload.avatar ?? this.data.avatar };
+        try {
+          if (authStore && typeof authStore.user?.set === 'function') {
+            authStore.user.set(updatedUser);
+            if (typeof window !== 'undefined' && window.localStorage) {
+              localStorage.setItem('user', JSON.stringify(updatedUser));
+            }
+          }
+        } catch (e) {
+          console.warn('Could not update authStore after profile update', e);
+        }
+
+        // Close dialog and return updated user
+        this.dialogRef.close(updatedUser);
+        this.loading.set(false);
+      },
+      error: (err: any) => {
+        console.error('profile update failed', err);
+        this.loading.set(false);
+        alert('Profile update failed. Please try again.');
+      }
+    });
+  }
 
   submit() {
     if (this.password() && this.password() !== this.confirmPassword()) {
       alert('Passwords do not match');
-      return;}
-      
-    this.updateProfile()
-    this.userUpdaterFn()}
-   
+      return;
+    }
+
+    const payload = this.preparePayload();
+    this.callUpdateProfile(payload);
+  }
 
   closeEdit() {
-    this.dialogRef.close();}
-
-  updateProfile() {
-     const formData = new FormData();
-  formData.append('username', this.username());
-    const profile = profileSignal()
-  if (profile.image instanceof File) {
-    formData.append('image', this.avatar());}
-    const name = this.username()
-    console.log(name);
-    
-  this.apiService.updateProfile(name).subscribe({
-    next: (res) => {console.log('profile updated successfully')}})}
-  
-
-  userUpdaterFn() {
-     const updatedUser: User = {
-      ...this.data,
-      name: this.username(),
-      avatar: this.avatar()};
-    this.dialogRef.close(updatedUser);
+    this.dialogRef.close();
   }
-  
+
 }
