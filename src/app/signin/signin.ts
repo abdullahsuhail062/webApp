@@ -16,6 +16,7 @@ import { authStore } from '../auth-store';
 export class Signin {
 loginForm: FormGroup
 loading = signal(false);
+  passwordVisible = signal(false);
 constructor(private router: Router, private apiService: Apis) {
    this.loginForm = new FormGroup({
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -43,6 +44,10 @@ constructor(private router: Router, private apiService: Apis) {
         alert('Login failed. Please try again.');
       }
     });
+  }
+
+  togglePasswordVisible() {
+    this.passwordVisible.set(!this.passwordVisible());
   }
 
 }

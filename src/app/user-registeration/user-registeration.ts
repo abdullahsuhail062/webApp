@@ -20,6 +20,8 @@ import { authStore } from '../auth-store';
 export class UserRegisteration {
   registerForm: FormGroup
     loading = signal(false);
+  passwordVisible = signal(false);
+  confirmPasswordVisible = signal(false);
 
 
 constructor(private router: Router, private apiService: Apis){
@@ -55,6 +57,12 @@ constructor(private router: Router, private apiService: Apis){
     }
   }
 
-  
+  togglePasswordVisible() {
+    this.passwordVisible.set(!this.passwordVisible());
+  }
+
+  toggleConfirmPasswordVisible() {
+    this.confirmPasswordVisible.set(!this.confirmPasswordVisible());
+  }
 
 }

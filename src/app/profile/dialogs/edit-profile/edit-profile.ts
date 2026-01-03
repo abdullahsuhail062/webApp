@@ -33,6 +33,8 @@ export class EditProfile {
   confirmPassword = signal('');
   avatar = signal<string>('https://i.pravatar.cc/120');
   loading = signal(false);
+  passwordVisible = signal(false);
+  confirmPasswordVisible = signal(false);
 
   
   
@@ -110,6 +112,14 @@ export class EditProfile {
 
   closeEdit() {
     this.dialogRef.close();
+  }
+
+  togglePasswordVisible() {
+    this.passwordVisible.set(!this.passwordVisible());
+  }
+
+  toggleConfirmPasswordVisible() {
+    this.confirmPasswordVisible.set(!this.confirmPasswordVisible());
   }
 
 }
