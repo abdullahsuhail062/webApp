@@ -44,6 +44,9 @@ constructor(private router: Router, private apiService: Apis){
           authStore.setAuth(response.user, response.token);
           this.loading.set(false);
           this.router.navigate(['/dashboard']);
+          console.log(authStore.user());
+          
+  
         },
         error: (err) => {
           console.error('Registration failed', err);
