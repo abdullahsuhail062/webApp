@@ -55,8 +55,14 @@
       <!-- Login Button -->
       <button
         type="submit"
-        class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
-        Sign In
+        [disabled]="loading()"
+        class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all cursor-pointer disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+        @if (loading()) {
+          <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <span>Signing In...</span>
+        } @else {
+          <span>Sign In</span>
+        }
       </button>
 
       <!-- Don't have account -->

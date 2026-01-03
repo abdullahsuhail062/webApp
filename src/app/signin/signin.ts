@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Apis } from '../services/apis';
@@ -8,12 +9,13 @@ import { authStore } from '../auth-store';
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './signin.html',
   styleUrl: './signin.css',
 })
 export class Signin {
 loginForm: FormGroup
+loading = signal(false);
 constructor(private router: Router, private apiService: Apis) {
    this.loginForm = new FormGroup({
     email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -28,10 +30,19 @@ constructor(private router: Router, private apiService: Apis) {
       return;
     }
 
-    this.apiService.loginUser(this.loginForm.value).subscribe({next: (response) => {authStore.setAuth(response.user, response.token);
-      
-      this.router.navigate(['/dashboard'])
-    }})    
+    this.loading.set(true);
+    this.apiService.loginUser(this.loginForm.value).subscribe({
+      next: (response) => {
+        authStore.setAuth(response.user, response.token);
+        this.loading.set(false);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        console.error('Login failed', err);
+        this.loading.set(false);
+        alert('Login failed. Please try again.');
+      }
+    });
   }
 
 }
