@@ -27,10 +27,7 @@ export class ProfileDialog {
   constructor(private router: Router){}
 
 
-  goToDashboard() {
-    this.router.navigate(['/dashboard'])
-    this.closeDialog()
-  }
+ 
   openSettings() {
     this.dialog.open(Setting, {
       width: '400px',
@@ -106,4 +103,9 @@ closeEdit() {
 onSave(updatedUser: User) {
   this.editProfileUser.set(updatedUser);
 }
+
+ goToDashboard() {
+    this.router.navigate(['/dashboard'])
+    this.closeDialog()
+  }
 }
