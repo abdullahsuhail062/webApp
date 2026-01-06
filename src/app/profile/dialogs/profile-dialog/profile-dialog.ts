@@ -1,5 +1,5 @@
-import { Component, input, signal, inject } from '@angular/core';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Component, input, signal, inject, output } from '@angular/core';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { authStore } from '../../../auth-store';
@@ -7,12 +7,13 @@ import { User } from '../../../models/user';
 import { EditProfile } from '../edit-profile/edit-profile';
 import { Setting } from '../setting/setting';
 import { CommonModule } from '@angular/common';
+import { LogoutDialogComponent } from '../../../services/logout-dialog.component';
 
 
 
 
 @Component({
-  imports: [EditProfile, Setting, MatDialogModule, MatButtonModule, CommonModule],
+  imports: [MatDialogModule, MatButtonModule, CommonModule],
   selector: 'app-profile-dialog',
   templateUrl: './profile-dialog.html',
   styleUrl: './profile-dialog.css',
@@ -20,6 +21,11 @@ import { CommonModule } from '@angular/common';
 export class ProfileDialog {
  editProfileUser = signal<User>(authStore.user())
  user = input<User>()
+ 
+  // Emit when the dialog should be closed (used when component is embedded)
+  close = output<void>()
+  // Optional reference to a parent MatDialog if this component was opened as a dialog
+  parentDialogRef = inject(MatDialogRef<ProfileDialog>, { optional: true });
  
   editMode = signal(false);
   dialog = inject(MatDialog);
@@ -76,19 +82,27 @@ export class ProfileDialog {
 
 
   closeDialog() {
-    // If this component is used in a dialog, close the parent dialog
-    const parentDialog = inject(MatDialog);
+    // If this component is rendered inside a MatDialog, close that dialog
+    if (this.parentDialogRef) {
+      this.parentDialogRef.close();
+      return;
+    }
+
+    // Otherwise emit the `close` output so host components can react
+    this.close.emit();
   }
 
-  goTo(path: string) {
-    this.router.navigateByUrl(path);
-    this.closeDialog();
-  }
+  
 
   logout() {
-    authStore.logout();
-    this.router.navigateByUrl('/signin', { replaceUrl: true });
-    this.closeDialog();
+    this.dialog.open(LogoutDialogComponent).afterClosed().subscribe(loggedOut => {
+      if (loggedOut) {
+        this.router.navigateByUrl('/signin', { replaceUrl: true });
+        this.closeDialog()
+        
+      }
+    })
+   
   }
 
 

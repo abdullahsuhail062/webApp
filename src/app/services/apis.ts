@@ -11,23 +11,28 @@ import { RegisterRequest } from '../models/register-request.model';
   providedIn: 'root',
 })
 export class Apis {
-private apiUrl = environment.apiUrl
+  private apiUrl = environment.apiUrl;
 
 
   constructor(private http: HttpClient) {}
 
   registerUser(body: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users/registerUser`,{body})
+    return this.http.post(`${this.apiUrl}/users/registerUser`, body);
   }
 
   loginUser(body: {email: string, password: string}): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users/loginUser`, {body})
+    return this.http.post(`${this.apiUrl}/users/loginUser`, body);
   }
 
-  updateProfile(data: any) {
-    console.log(data, 'data being sent');
-    
+  updateProfile(data: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/users/profileUpdate`, data);
+  }
+  
+  // Delete the currently authenticated user's account. Accepts password for confirmation.
+  deleteAccount(password: string): Observable<any> {
+    return this.http.request('DELETE', `${this.apiUrl}/users/deleteAccount`, {
+      body: { password },
+    });
   }
   
 }
