@@ -20,6 +20,7 @@ import { authStore } from '../auth-store';
     .logout-dialog { padding: 20px; border: 1px solid #ddd; background: #fff; border-radius: 8px; }
     .actions { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
     .btn-logout { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; }
+    :host-context(.dark) .logout-dialog { background-color: #1f2937; color: #f3f4f6; border-color: #374151; }
   `]
 })
 export class LogoutDialogComponent {

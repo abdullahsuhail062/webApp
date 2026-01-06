@@ -1,4 +1,4 @@
-import { Component, input, signal, Inject, effect } from '@angular/core';
+import { Component, input, signal, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSlideToggleModule, MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -9,6 +9,7 @@ import { authStore } from '../../../auth-store';
 import { Router } from '@angular/router';
 import { Apis } from '../../../services/apis';
 import { DeleteAccountDialogComponent } from '../../../services/delete-account-dialog.component';
+import { ThemeService } from '../../../services/theme.service';
 
 
 @Component({
@@ -24,7 +25,6 @@ export class Setting {
   // Settings signals
   emailNotifications = signal(true);
   pushNotifications = signal(false);
-  darkMode = signal(false);
   profileVisibility = signal(true);
   twoFactorAuth = signal(false);
 
@@ -33,23 +33,13 @@ export class Setting {
     @Inject(MAT_DIALOG_DATA) public data: User,
     private router: Router,
     private apiService: Apis,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    public themeService: ThemeService
   ) {
-    // Initialize dark mode based on localStorage or system preference
-    const isDark = localStorage.getItem('theme') === 'dark' || 
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
-    this.darkMode.set(isDark);
-
-    // Automatically apply dark mode class and save preference when signal changes
-    effect(() => {
-      const isDark = this.darkMode();
-      document.documentElement.classList.toggle('dark', isDark);
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
   }
 
   toggleDarkMode(event: MatSlideToggleChange) {
-    this.darkMode.set(event.checked);
+    this.themeService.darkMode.set(event.checked);
   }
 
   openEdit() {
@@ -66,7 +56,7 @@ export class Setting {
     console.log({
       emailNotifications: this.emailNotifications(),
       pushNotifications: this.pushNotifications(),
-      darkMode: this.darkMode(),
+      darkMode: this.themeService.darkMode(),
       profileVisibility: this.profileVisibility(),
       twoFactorAuth: this.twoFactorAuth(),
     });

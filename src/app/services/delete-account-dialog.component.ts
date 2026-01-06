@@ -20,7 +20,7 @@ import { Apis } from './apis';
           placeholder="Enter your password"
           class="w-full rounded-md border border-gray-300 px-4 py-2 
                  focus:outline-none focus:ring-2 focus:ring-blue-500
-                 text-sm sm:text-base pr-12"
+                 text-sm sm:text-base pr-12 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:placeholder-gray-400"
         />
         <button type="button" (click)="togglePasswordVisibility()" 
                 class="absolute right-8 top-1/2 -translate-y-1/2 text-sm text-gray-500 hover:text-gray-700 font-medium focus:outline-none">
@@ -47,6 +47,7 @@ import { Apis } from './apis';
     .actions { margin-top: 20px; display: flex; gap: 10px; justify-content: center; }
     .btn-delete { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 4px; }
     .btn-delete:disabled { background-color: #e0a1a9; cursor: not-allowed; }
+    :host-context(.dark) .delete-dialog { background-color: #1f2937; color: #f3f4f6; border-color: #374151; }
   `]
 })
 export class DeleteAccountDialogComponent {
