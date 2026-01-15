@@ -25,7 +25,7 @@ export class Apis {
   }
 
   updateProfile(formData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/users/profileUpdate`, formData);
+    return this.http.patch(`${this.apiUrl}/users/profileUpdate`, formData);
   }
   
   // Delete the currently authenticated user's account. Accepts password for confirmation.
