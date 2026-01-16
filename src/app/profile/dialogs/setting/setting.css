@@ -75,12 +75,3 @@
   margin-top: 24px;
 }
 
-/* Dark Mode Overrides */
-:host-context(.dark) .settings-dialog { background-color: #1f2937; color: #f3f4f6; }
-:host-context(.dark) .section-header { color: #e5e7eb; border-bottom-color: #374151; }
-:host-context(.dark) .setting-description { color: #9ca3af; }
-
-/* Dark Mode Danger Zone */
-:host-context(.dark) .danger-zone { background-color: #450a0a; border-color: #7f1d1d; }
-:host-context(.dark) .danger-header { color: #fca5a5; border-bottom-color: #7f1d1d; }
-:host-context(.dark) .danger-label { color: #fecaca; }

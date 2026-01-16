@@ -9,7 +9,9 @@ import { authStore } from '../../../auth-store';
 import { Router } from '@angular/router';
 import { Apis } from '../../../services/apis';
 import { DeleteAccountDialogComponent } from '../../../services/delete-account-dialog.component';
-import { ThemeService } from '../../../services/theme.service';
+import { ThemeService } from '../../../theme/theme-service';
+import { ThemeStore } from '../../../theme/theme-store';
+
 
 
 @Component({
@@ -27,8 +29,9 @@ export class Setting {
   pushNotifications = signal(false);
   profileVisibility = signal(true);
   twoFactorAuth = signal(false);
+   theme = Inject(ThemeStore).theme
 
-  constructor(
+  constructor(public themeStore: ThemeStore,
     public dialogRef: MatDialogRef<Setting>,
     @Inject(MAT_DIALOG_DATA) public data: User,
     private router: Router,
@@ -37,9 +40,10 @@ export class Setting {
     public themeService: ThemeService
   ) {
   }
+ 
 
-  toggleDarkMode(event: MatSlideToggleChange) {
-    this.themeService.darkMode.set(event.checked);
+  toggleTheme() {
+    this.themeStore.toggle()
   }
 
   openEdit() {
@@ -56,7 +60,6 @@ export class Setting {
     console.log({
       emailNotifications: this.emailNotifications(),
       pushNotifications: this.pushNotifications(),
-      darkMode: this.themeService.darkMode(),
       profileVisibility: this.profileVisibility(),
       twoFactorAuth: this.twoFactorAuth(),
     });
