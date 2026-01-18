@@ -29,7 +29,8 @@ export class Setting {
   pushNotifications = signal(false);
   profileVisibility = signal(true);
   twoFactorAuth = signal(false);
-   theme = Inject(ThemeStore).theme
+  theme = Inject(ThemeStore).theme
+  private currentTheme: 'light' | 'dark' = 'light';
 
   constructor(public themeStore: ThemeStore,
     public dialogRef: MatDialogRef<Setting>,
@@ -44,6 +45,8 @@ export class Setting {
 
   toggleTheme() {
     this.themeStore.toggle()
+     this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+    this.themeService.applyTheme(this.currentTheme);
   }
 
   openEdit() {

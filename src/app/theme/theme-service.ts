@@ -27,5 +27,12 @@ export class ThemeService {
       document.documentElement.setAttribute('data-theme', theme);
       localStorage.setItem('theme', theme);
     });
+
+
   }
+
+
+    applyTheme(theme: 'light' | 'dark') {
+  document.body.classList.toggle('dark', theme === 'dark');
+}
 }
