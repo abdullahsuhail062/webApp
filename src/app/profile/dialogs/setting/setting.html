@@ -32,7 +32,11 @@
           <label class="setting-label">Dark Mode</label>
           <p class="setting-description">Use dark theme for the application</p>
         </div>
-        <mat-slide-toggle [checked]="theme() === 'dark'" (change)="toggleTheme()"></mat-slide-toggle>
+        <mat-slide-toggle
+  [checked]="theme() === 'dark'"
+  (change)="toggleTheme($event)">
+</mat-slide-toggle>
+
       </div>
     </div>
 
