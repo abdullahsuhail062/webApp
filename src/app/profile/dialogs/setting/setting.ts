@@ -44,7 +44,8 @@ export class Setting {
  
 
   toggleTheme(event: MatSlideToggleChange) {
-    this.themeStore.toggle()
+      const theme = event.checked ? 'dark' : 'light';
+      this.themeStore.setTheme(theme)
      this.currentTheme = this.currentTheme === 'light' ? 'dark' : 'light';
     this.themeService.applyTheme(this.currentTheme);
   }
