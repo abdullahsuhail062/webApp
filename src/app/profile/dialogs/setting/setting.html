@@ -20,10 +20,9 @@
 
     <div class="setting-item">
       <span>Dark Mode</span>
-      <mat-slide-toggle
-        [checked]="theme() === 'dark'"
-        (change)="toggleTheme($event)">
-      </mat-slide-toggle>
+      <p><mat-slide-toggle
+        [checked]="theme === 'dark'"
+        (change)="toggleTheme($event)"></mat-slide-toggle></p>
     </div>
   </div>
 

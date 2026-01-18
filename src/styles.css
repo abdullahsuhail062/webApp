@@ -10,16 +10,18 @@
   @apply w-full px-4 py-2 text-left text-sm font-medium text-gray-700
          hover:bg-gray-100 transition-colors;
 }
-
-/* styles.css */
 :root {
   --bg: #ffffff;
   --text: #0f172a;
-  --card: #f1f5f9;
 }
 
 [data-theme='dark'] {
   --bg: #020617;
   --text: #e5e7eb;
-  --card: #020617;
 }
+
+html, body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+

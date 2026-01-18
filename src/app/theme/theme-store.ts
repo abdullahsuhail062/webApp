@@ -6,6 +6,7 @@ export type Theme = 'light' | 'dark';
 @Injectable({ providedIn: 'root' })
 export class ThemeStore {
   private _theme = signal<Theme>('light');
+  
 
   theme = computed(() => this._theme());
 
