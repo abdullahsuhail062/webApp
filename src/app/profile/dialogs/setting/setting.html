@@ -1,84 +1,50 @@
 <div class="settings-dialog">
   <h2 class="settings-title">Settings</h2>
-  
-  <div mat-dialog-content class="settings-content">
-    <!-- Notifications Section -->
-    <div class="settings-section">
-      <h3 class="section-header">Notifications</h3>
-      
-      <div class="setting-item">
-        <div class="setting-info">
-          <label class="setting-label">Email Notifications</label>
-          <p class="setting-description">Receive email updates about your account</p>
-        </div>
-        <mat-slide-toggle [(ngModel)]="emailNotifications" color="accent"></mat-slide-toggle>
-      </div>
 
-      <div class="setting-item">
-        <div class="setting-info">
-          <label class="setting-label">Push Notifications</label>
-          <p class="setting-description">Get browser push notifications</p>
-        </div>
-        <mat-slide-toggle [(ngModel)]="pushNotifications" color="accent"></mat-slide-toggle>
-      </div>
+  <div class="settings-section">
+    <h3>Notifications</h3>
+
+    <div class="setting-item">
+      <span>Email Notifications</span>
+      <mat-slide-toggle [(ngModel)]="emailNotifications"></mat-slide-toggle>
     </div>
 
-    <!-- Appearance Section -->
-    <div class="settings-section">
-      <h3 class="section-header">Appearance</h3>
-      
-      <div class="setting-item">
-        <div class="setting-info">
-          <label class="setting-label">Dark Mode</label>
-          <p class="setting-description">Use dark theme for the application</p>
-        </div>
-        <mat-slide-toggle
-  [checked]="theme() === 'dark'"
-  (change)="toggleTheme($event)">
-</mat-slide-toggle>
-
-      </div>
-    </div>
-
-    <!-- Privacy Section -->
-    <div class="settings-section">
-      <h3 class="section-header">Privacy & Security</h3>
-      
-      <div class="setting-item">
-        <div class="setting-info">
-          <label class="setting-label">Profile Visibility</label>
-          <p class="setting-description">Allow others to see your profile</p>
-        </div>
-        <mat-slide-toggle [(ngModel)]="profileVisibility" color="accent"></mat-slide-toggle>
-      </div>
-
-      <div class="setting-item">
-        <div class="setting-info">
-          <label class="setting-label">Two-Factor Authentication</label>
-          <p class="setting-description">Add an extra layer of security</p>
-        </div>
-        <mat-slide-toggle [(ngModel)]="twoFactorAuth" color="accent"></mat-slide-toggle>
-      </div>
-    </div>
-
-    <!-- Danger Zone Section -->
-    <div class="settings-section danger-zone">
-      <h3 class="section-header danger-header">Danger Zone</h3>
-      
-      <div class="setting-item danger-item">
-        <div class="setting-info">
-          <label class="setting-label danger-label">Delete Account</label>
-          <p class="setting-description">Permanently delete your account and all data</p>
-        </div>
-        <button mat-raised-button class="delete-button" (click)="openDeleteConfirm()">
-          Delete
-        </button>
-      </div>
+    <div class="setting-item">
+      <span>Push Notifications</span>
+      <mat-slide-toggle [(ngModel)]="pushNotifications"></mat-slide-toggle>
     </div>
   </div>
 
-  <div mat-dialog-actions class="settings-actions">
-    <button mat-stroked-button class="action-button" (click)="closeEdit()">Close</button>
-    <button mat-raised-button color="primary" class="action-button save-button" (click)="saveSettings()">Save Changes</button>
+  <div class="settings-section">
+    <h3>Appearance</h3>
+
+    <div class="setting-item">
+      <span>Dark Mode</span>
+      <mat-slide-toggle
+        [checked]="theme() === 'dark'"
+        (change)="toggleTheme($event)">
+      </mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h3>Privacy</h3>
+
+    <div class="setting-item">
+      <span>Profile Visibility</span>
+      <mat-slide-toggle [(ngModel)]="profileVisibility"></mat-slide-toggle>
+    </div>
+
+    <div class="setting-item">
+      <span>Two Factor Authentication</span>
+      <mat-slide-toggle [(ngModel)]="twoFactorAuth"></mat-slide-toggle>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button mat-stroked-button (click)="closeEdit()">Close</button>
+    <button mat-raised-button color="primary" (click)="saveSettings()">
+      Save
+    </button>
   </div>
 </div>
