@@ -32,6 +32,8 @@ constructor(private router: Router, private apiService: Apis) {
     }
 
     this.loading.set(true);
+    console.log(this.loginForm.value);
+    
     this.apiService.loginUser(this.loginForm.value).subscribe({
       next: (response) => {
         authStore.setAuth(response.user, response.token);
