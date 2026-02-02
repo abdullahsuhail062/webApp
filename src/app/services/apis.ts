@@ -21,8 +21,9 @@ export class Apis {
   }
 
   loginUser(body: {email: string, password: string}): Observable<any> {
-    return this.http.post(`${this.apiUrl}/users/loginUser`, body);
-  }
+  return this.http.post(`${this.apiUrl}/users/loginUser`, body);
+  //                   
+}
 
   updateProfile(formData: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/users/profileUpdate`, formData);
